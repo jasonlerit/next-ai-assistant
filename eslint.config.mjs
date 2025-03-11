@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc"
+import n from "eslint-plugin-n"
 import { dirname } from "path"
 import { fileURLToPath } from "url"
 
@@ -14,7 +15,9 @@ const eslintConfig = [
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.mjs"],
     ignores: ["src/components/ui/*", "src/hooks/*"],
+    plugins: { n },
     rules: {
+      "n/no-process-env": "error",
       "no-console": "error",
     },
   },
