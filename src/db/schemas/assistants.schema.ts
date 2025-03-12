@@ -12,8 +12,10 @@ export const assistants = pgTable("assistants", {
   role: text().notNull(),
   model: text().notNull(),
   instruction: text().notNull(),
-  createdAt: timestamp().notNull(),
-  updatedAt: timestamp().notNull(),
+  createdAt: timestamp().defaultNow(),
+  updatedAt: timestamp()
+    .defaultNow()
+    .$onUpdate(() => new Date()),
 })
 
 export const assistantsRelations = relations(assistants, ({ one }) => ({
@@ -32,6 +34,7 @@ export const insertAssistantsSchema = createInsertSchema(assistants, {
   instruction: (s) => s.min(1),
 }).omit({
   id: true,
+  userId: true,
   createdAt: true,
   updatedAt: true,
 })
