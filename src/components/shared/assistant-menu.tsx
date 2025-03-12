@@ -1,5 +1,6 @@
 "use client"
 
+import { QueryKey } from "@/common/types/query-key.type"
 import { CreateAssistantDialog } from "@/components/shared/dialog/create-assistant-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -10,44 +11,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Plus } from "lucide-react"
+import { getAssistants } from "@/lib/api"
+import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useState } from "react"
-
-interface Assistant {
-  id: string
-  name: string
-  role: string
-  image: string
-}
 
 export function AssistantMenu() {
   const pathname = usePathname()
 
-  const [items, setItems] = useState<Assistant[]>([
-    {
-      id: "1",
-      name: "Name 1",
-      role: "Grammar Fixer",
-      image:
-        "https://images.pexels.com/photos/264905/pexels-photo-264905.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    },
-    {
-      id: "2",
-      name: "Name 2",
-      role: "Commit Artisan",
-      image:
-        "https://images.pexels.com/photos/163077/mario-yoschi-figures-funny-163077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    },
-    {
-      id: "3",
-      name: "Name 3",
-      role: "Personal Coach",
-      image:
-        "https://images.pexels.com/photos/163077/mario-yoschi-figures-funny-163077.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    },
-  ])
+  const { data } = useQuery({
+    queryKey: [QueryKey.ASSISTANTS],
+    queryFn: getAssistants,
+  })
 
   return (
     <SidebarGroup>
@@ -57,7 +32,7 @@ export function AssistantMenu() {
           <SidebarMenuItem>
             <CreateAssistantDialog />
           </SidebarMenuItem>
-          {items.map((item) => (
+          {data?.items.map((item) => (
             <SidebarMenuItem key={item.id}>
               <SidebarMenuButton
                 className='h-fit'
@@ -66,7 +41,7 @@ export function AssistantMenu() {
               >
                 <Link href={`/assistants/${item.id}`}>
                   <Avatar className='h-10 w-10 rounded-lg'>
-                    <AvatarImage src={item.image} alt={item.name} />
+                    <AvatarImage src={""} alt={item.name} />
                     <AvatarFallback className='rounded-lg'>{item.name}</AvatarFallback>
                   </Avatar>
                   <div className='flex flex-col'>
