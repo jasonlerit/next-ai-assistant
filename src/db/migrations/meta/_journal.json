@@ -22,6 +22,13 @@
       "when": 1741777803923,
       "tag": "0002_sweet_norrin_radd",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1741782304191,
+      "tag": "0003_little_queen_noir",
+      "breakpoints": true
     }
   ]
 }

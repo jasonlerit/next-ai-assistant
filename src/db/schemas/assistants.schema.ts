@@ -1,5 +1,5 @@
 import { users } from "@/db/schemas/users.schema"
-import { InferSelectModel, relations } from "drizzle-orm"
+import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm"
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
 
@@ -11,7 +11,7 @@ export const assistants = pgTable("assistants", {
   name: text().notNull(),
   role: text().notNull(),
   model: text().notNull(),
-  instruction: text().notNull(),
+  systemInstruction: text().notNull(),
   createdAt: timestamp().defaultNow(),
   updatedAt: timestamp()
     .defaultNow()
@@ -28,10 +28,10 @@ export const assistantsRelations = relations(assistants, ({ one }) => ({
 export const selectAssistantsSchema = createSelectSchema(assistants)
 
 export const insertAssistantsSchema = createInsertSchema(assistants, {
-  name: (s) => s.min(1).max(255),
-  role: (s) => s.min(1).max(255),
-  model: (s) => s.min(1).max(255),
-  instruction: (s) => s.min(1),
+  name: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
+  role: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
+  model: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
+  systemInstruction: (s) => s.min(1, "Minimum of 1 character"),
 }).omit({
   id: true,
   userId: true,
@@ -42,3 +42,4 @@ export const insertAssistantsSchema = createInsertSchema(assistants, {
 export const patchAssistantsSchema = insertAssistantsSchema.partial()
 
 export type Assistant = InferSelectModel<typeof assistants>
+export type CreateAssistant = Omit<InferInsertModel<typeof assistants>, "id" | "userId">

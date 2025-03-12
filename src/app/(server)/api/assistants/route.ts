@@ -14,13 +14,13 @@ export async function POST(req: Request) {
       return new Response(null, { status: 401 })
     }
 
-    const { name, role, model, instruction } = await req.json()
+    const { name, role, model, systemInstruction } = await req.json()
 
     const parsedData = insertAssistantsSchema.parse({
       name,
       role,
       model,
-      instruction,
+      systemInstruction,
     })
 
     const [inserted] = await db

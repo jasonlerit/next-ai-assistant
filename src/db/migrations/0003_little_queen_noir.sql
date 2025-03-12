@@ -1,0 +1,1 @@
+ALTER TABLE "assistants" RENAME COLUMN "instruction" TO "system_instruction";

@@ -1,5 +1,6 @@
 "use client"
 
+import { CreateAssistantDialog } from "@/components/shared/dialog/create-assistant-dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   SidebarGroup,
@@ -54,10 +55,7 @@ export function AssistantMenu() {
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton className='cursor-pointer'>
-              <Plus />
-              <span>Add New Assistant</span>
-            </SidebarMenuButton>
+            <CreateAssistantDialog />
           </SidebarMenuItem>
           {items.map((item) => (
             <SidebarMenuItem key={item.id}>
