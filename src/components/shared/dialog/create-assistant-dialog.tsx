@@ -19,7 +19,7 @@ import { getQueryClient } from "@/lib/react-query"
 import { useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
 import { AxiosError } from "axios"
-import { LucideLoader, Plus } from "lucide-react"
+import { Loader2, Plus } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 
@@ -191,9 +191,7 @@ export function CreateAssistantDialog() {
                   type='submit'
                   disabled={!canSubmit || !isDirty || mutation.isPending}
                 >
-                  {(isSubmitting || mutation.isPending) && (
-                    <LucideLoader className='animate-spin' />
-                  )}
+                  {(isSubmitting || mutation.isPending) && <Loader2 className='animate-spin' />}
                   Create Assistant
                 </Button>
               )}
