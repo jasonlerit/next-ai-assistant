@@ -1,3 +1,5 @@
+import { assistants } from "@/db/schemas/assistants.schema"
+import { relations } from "drizzle-orm"
 import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
@@ -9,3 +11,7 @@ export const users = pgTable("users", {
   createdAt: timestamp().notNull(),
   updatedAt: timestamp().notNull(),
 })
+
+export const usersRelations = relations(users, ({ many }) => ({
+  assistants: many(assistants),
+}))
