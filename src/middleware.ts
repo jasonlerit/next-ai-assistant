@@ -1,7 +1,7 @@
 import { getSessionCookie } from "better-auth/cookies"
 import { NextRequest, NextResponse } from "next/server"
 
-const protectedRoutes = ["/dashboard"]
+const protectedRoutes = ["/assistants"]
 const publicRoutes = ["/sign-in"]
 
 export default async function middleware(req: NextRequest) {
@@ -17,7 +17,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isPublicRoute && sessionCookie) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl))
+    return NextResponse.redirect(new URL("/assistants", req.nextUrl))
   }
 
   return NextResponse.next()

@@ -1,18 +1,11 @@
 "use client"
 
+import { AssistantMenu } from "@/components/shared/assistant-menu"
 import { NavMenu } from "@/components/shared/nav-menu"
 import { NavUser } from "@/components/shared/nav-user"
 import { Sidebar, SidebarContent, SidebarFooter } from "@/components/ui/sidebar"
 import { authClient } from "@/lib/auth-client"
-import { LayoutDashboard, LifeBuoy, Send } from "lucide-react"
-
-const navMain = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-]
+import { LifeBuoy, Send } from "lucide-react"
 
 const navSecondary = [
   {
@@ -33,7 +26,7 @@ export function AppSidebar() {
   return (
     <Sidebar variant='floating' collapsible='icon'>
       <SidebarContent>
-        <NavMenu label='Application' items={navMain} />
+        <AssistantMenu />
         <NavMenu items={navSecondary} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>
