@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "@/common/types/pagination.type"
 import { QueryKey } from "@/common/types/query-key.type"
 import { InputError } from "@/components/shared/input/input-error"
 import { Button } from "@/components/ui/button"
@@ -33,7 +34,9 @@ export function CreateAssistantDialog() {
     onMutate: async (newAssistant) => {
       await queryClient.cancelQueries({ queryKey: [QueryKey.ASSISTANTS] })
 
-      const previousAssistants = queryClient.getQueryData<Assistant[]>([QueryKey.ASSISTANTS])
+      const previousPaginatedAssistants = queryClient.getQueryData<PaginatedResponse<Assistant>>([
+        QueryKey.ASSISTANTS,
+      ])
 
       const modifiedNewAssistant: Assistant = {
         ...newAssistant,
@@ -43,15 +46,23 @@ export function CreateAssistantDialog() {
         updatedAt: new Date(),
       }
 
-      queryClient.setQueryData<Assistant[]>([QueryKey.ASSISTANTS], (old) => {
-        if (!old) return [modifiedNewAssistant]
-        return [...old, modifiedNewAssistant]
+      queryClient.setQueryData<PaginatedResponse<Assistant>>([QueryKey.ASSISTANTS], (old) => {
+        if (old) {
+          return {
+            ...old,
+            items: [...old.items, modifiedNewAssistant],
+          }
+        }
+        return old
       })
 
-      return { previousAssistants }
+      return { previousPaginatedAssistants }
     },
     onError: (error, newAssistant, context) => {
-      queryClient.setQueryData(["todos"], context?.previousAssistants)
+      queryClient.setQueryData<PaginatedResponse<Assistant>>(
+        [QueryKey.ASSISTANTS],
+        context?.previousPaginatedAssistants
+      )
 
       if (error instanceof AxiosError) {
         const errorData = error.response?.data
