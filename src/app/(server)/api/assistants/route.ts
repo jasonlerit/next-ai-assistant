@@ -1,7 +1,7 @@
 import db from "@/db"
 import { assistants, insertAssistantsSchema } from "@/db/schemas/assistants.schema"
 import { auth } from "@/lib/auth"
-import { eq } from "drizzle-orm"
+import { count, eq } from "drizzle-orm"
 import { headers } from "next/headers"
 import { NextRequest } from "next/server"
 import { ZodError } from "zod"
@@ -28,8 +28,12 @@ export async function GET(req: NextRequest) {
       where: eq(assistants.userId, session.user.id),
     })
 
-    const totalCount = await db.$count(assistants)
-    const totalPages = Math.ceil(totalCount / PAGE_SIZE)
+    const [total] = await db
+      .select({ count: count() })
+      .from(assistants)
+      .where(eq(assistants.userId, session.user.id))
+
+    const totalPages = Math.ceil(total.count / PAGE_SIZE)
 
     const previousPage = page > 1 ? page - 1 : null
     const nextPage = page < totalPages ? page + 1 : null
@@ -40,7 +44,7 @@ export async function GET(req: NextRequest) {
         current_page: page,
         previous_page: previousPage,
         next_page: nextPage,
-        total_count: totalCount,
+        total_count: total.count,
         total_pages: totalPages,
       },
     })
