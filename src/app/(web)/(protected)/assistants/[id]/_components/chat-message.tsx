@@ -21,7 +21,9 @@ export function ChatMessage({ message }: Props) {
             <AvatarFallback>AI</AvatarFallback>
           </Avatar>
         )}
-        <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
+        <div className='flex flex-col gap-2'>
+          <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
+        </div>
       </CardContent>
     </Card>
   )
