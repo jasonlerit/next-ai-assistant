@@ -113,46 +113,48 @@ export function ChatForm() {
   }
 
   return (
-    <form
-      className='flex gap-4 w-1/2'
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        form.handleSubmit()
-      }}
-    >
-      <form.Field name='content'>
-        {(field) => (
-          <Textarea
-            className='w-full resize-none min-h-10'
-            name={field.name}
-            value={field.state.value}
-            placeholder='How can I help you?'
-            onBlur={field.handleBlur}
-            onChange={(e) => field.handleChange(e.target.value)}
-            onKeyDown={handleOnKeyDown}
-            disabled={mutation.isPending}
-            rows={1}
-            // autoResize
-            // maxHeight={116}
-          />
-        )}
-      </form.Field>
-      <form.Subscribe selector={(state) => [state.canSubmit, state.isDirty, state.isSubmitting]}>
-        {([canSubmit, isDirty, isSubmitting]) => (
-          <Button
-            className='cursor-pointer'
-            type='submit'
-            disabled={!canSubmit || !isDirty || mutation.isPending}
-          >
-            {isSubmitting || mutation.isPending ? (
-              <Loader2 className='animate-spin' />
-            ) : (
-              <LucideSend />
-            )}
-          </Button>
-        )}
-      </form.Subscribe>
-    </form>
+    <div>
+      <form
+        className='flex gap-4 mx-auto lg:max-w-4xl'
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          form.handleSubmit()
+        }}
+      >
+        <form.Field name='content'>
+          {(field) => (
+            <Textarea
+              className='w-full resize-none min-h-10'
+              name={field.name}
+              value={field.state.value}
+              placeholder='How can I help you?'
+              onBlur={field.handleBlur}
+              onChange={(e) => field.handleChange(e.target.value)}
+              onKeyDown={handleOnKeyDown}
+              disabled={mutation.isPending}
+              rows={1}
+              // autoResize
+              // maxHeight={116}
+            />
+          )}
+        </form.Field>
+        <form.Subscribe selector={(state) => [state.canSubmit, state.isDirty, state.isSubmitting]}>
+          {([canSubmit, isDirty, isSubmitting]) => (
+            <Button
+              className='cursor-pointer'
+              type='submit'
+              disabled={!canSubmit || !isDirty || mutation.isPending}
+            >
+              {isSubmitting || mutation.isPending ? (
+                <Loader2 className='animate-spin' />
+              ) : (
+                <LucideSend />
+              )}
+            </Button>
+          )}
+        </form.Subscribe>
+      </form>
+    </div>
   )
 }
