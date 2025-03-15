@@ -80,7 +80,7 @@ export function CreateAssistantDialog() {
     },
     onSuccess: (newAssistant) => {
       toast.success("Success", {
-        description: `Successfully created ${newAssistant.name}`,
+        description: `Successfully created ${newAssistant?.name}`,
       })
     },
     onSettled: () => {
