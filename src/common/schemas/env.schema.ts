@@ -9,4 +9,7 @@ export const envSchema = z.object({
     .default("false"),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  OPENAI_API_KEY: z.string(),
+  REDIS_URL: z.string().url(),
+  REDIS_TTL: z.coerce.number(),
 })

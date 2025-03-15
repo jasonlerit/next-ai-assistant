@@ -42,7 +42,7 @@ export function AssistantMenu() {
                 <Link href={`/assistants/${item.id}`}>
                   <Avatar className='h-10 w-10 rounded-lg'>
                     <AvatarImage src={""} alt={item.name} />
-                    <AvatarFallback className='rounded-lg'>{item.name}</AvatarFallback>
+                    <AvatarFallback className='bg-gray-300 rounded-lg' />
                   </Avatar>
                   <div className='flex flex-col'>
                     <p className='font-semibold'>{item.name}</p>

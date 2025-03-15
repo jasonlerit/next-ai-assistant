@@ -1,0 +1,28 @@
+import { Message } from "@/common/types/message.type"
+import { Role } from "@/common/types/role.type"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Card, CardContent } from "@/components/ui/card"
+import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
+
+interface Props {
+  message: Message
+}
+
+export function ChatMessage({ message }: Props) {
+  return (
+    <Card
+      className={`${message.role === Role.USER ? "max-w-[90%] lg:max-w-[80%] self-end bg-primary text-primary-foreground" : "border-none shadow-none"} py-0`}
+    >
+      <CardContent className='flex gap-4 p-4'>
+        {message.role === Role.ASSISTANT && (
+          <Avatar>
+            <AvatarImage src='https://github.com/jasonlerit.png' alt='avatar' />
+            <AvatarFallback>AI</AvatarFallback>
+          </Avatar>
+        )}
+        <Markdown remarkPlugins={[remarkGfm]}>{message.content}</Markdown>
+      </CardContent>
+    </Card>
+  )
+}

@@ -16,7 +16,7 @@ axiosInstance.interceptors.response.use(
     if (error instanceof AxiosError) {
       if (error.status === 401) {
         if (typeof window !== "undefined") {
-          window.location.href = "/sign-in"
+          // window.location.href = "/sign-in"
         } else {
           redirect("/sign-in")
         }
