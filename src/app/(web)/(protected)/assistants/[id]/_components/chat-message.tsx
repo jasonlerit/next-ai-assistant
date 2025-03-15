@@ -2,16 +2,19 @@ import { Message } from "@/common/types/message.type"
 import { Role } from "@/common/types/role.type"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
+import { LegacyRef } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
 interface Props {
+  messageRef?: LegacyRef<HTMLDivElement>
   message: Message
 }
 
-export function ChatMessage({ message }: Props) {
+export function ChatMessage({ messageRef, message }: Props) {
   return (
     <Card
+      ref={messageRef}
       className={`${message.role === Role.USER ? "max-w-[90%] lg:max-w-[80%] self-end bg-primary text-primary-foreground" : "border-none shadow-none"} py-0`}
     >
       <CardContent className='flex gap-4 p-4'>
