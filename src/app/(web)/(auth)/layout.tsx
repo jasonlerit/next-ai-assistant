@@ -1,18 +1,19 @@
 "use client"
 
-import { authClient } from "@/lib/auth-client"
+import { useAuthSession } from "@/hooks/use-auth-session"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const { data, isPending } = authClient.useSession()
+
+  const { user, isPending } = useAuthSession()
 
   useEffect(() => {
-    if (data !== null && !isPending) {
+    if (user !== undefined && !isPending) {
       router.push("/assistants")
     }
-  }, [router, data, isPending])
+  }, [router, user, isPending])
 
   return children
 }

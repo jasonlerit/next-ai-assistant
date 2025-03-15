@@ -3,19 +3,20 @@
 import { AppSidebar } from "@/components/shared/app-sidebar"
 import { Navbar } from "@/components/shared/navbar"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { authClient } from "@/lib/auth-client"
+import { useAuthSession } from "@/hooks/use-auth-session"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const { data, isPending } = authClient.useSession()
+
+  const { user, isPending } = useAuthSession()
 
   useEffect(() => {
-    if (data === null && !isPending) {
+    if (user === undefined && !isPending) {
       router.push("/sign-in")
     }
-  }, [router, data, isPending])
+  }, [router, user, isPending])
 
   return (
     <SidebarProvider>
