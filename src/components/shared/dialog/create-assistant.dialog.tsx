@@ -118,13 +118,13 @@ export function CreateAssistantDialog() {
       <DialogTrigger asChild onClick={() => form.reset()}>
         <SidebarMenuButton className='cursor-pointer'>
           <Plus />
-          <span>Add New Assistant</span>
+          <span>Create Assistant</span>
         </SidebarMenuButton>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add New Assistant</DialogTitle>
-          <DialogDescription>Add new assistant ^^</DialogDescription>
+          <DialogTitle>Create Assistant</DialogTitle>
+          <DialogDescription>Create a custom AI assistant for your needs.</DialogDescription>
         </DialogHeader>
         <form
           className='flex flex-col gap-4 '
@@ -214,7 +214,7 @@ export function CreateAssistantDialog() {
                 disabled={!canSubmit || !isDirty || mutation.isPending}
               >
                 {(isSubmitting || mutation.isPending) && <Loader2 className='animate-spin' />}
-                Create Assistant
+                Create
               </Button>
             )}
           </form.Subscribe>

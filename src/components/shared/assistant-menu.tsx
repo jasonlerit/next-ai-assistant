@@ -1,7 +1,7 @@
 "use client"
 
 import { QueryKey } from "@/common/types/query-key.type"
-import { CreateAssistantDialog } from "@/components/shared/dialog/create-assistant-dialog"
+import { CreateAssistantDialog } from "@/components/shared/dialog/create-assistant.dialog"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   SidebarGroup,
