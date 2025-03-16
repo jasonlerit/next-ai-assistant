@@ -25,9 +25,10 @@ import { toast } from "sonner"
 
 interface Props {
   shouldResetForm: boolean
+  onSettledCallback: () => void
 }
 
-export function AssistantForm({ shouldResetForm }: Props) {
+export function AssistantForm({ shouldResetForm, onSettledCallback }: Props) {
   const queryClient = getQueryClient()
 
   const mutation = useMutation({
@@ -87,7 +88,7 @@ export function AssistantForm({ shouldResetForm }: Props) {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [QueryKey.ASSISTANTS] })
       form.reset()
-      // setShowCreateDialog(false)
+      onSettledCallback()
     },
   })
 

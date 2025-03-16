@@ -27,7 +27,12 @@ export function CreateAssistantDialog() {
           <DialogTitle>Create Assistant</DialogTitle>
           <DialogDescription>Create a custom AI assistant for your needs.</DialogDescription>
         </DialogHeader>
-        <AssistantForm shouldResetForm={showCreateDialog} />
+        <AssistantForm
+          shouldResetForm={showCreateDialog}
+          onSettledCallback={() => {
+            setShowCreateDialog(false)
+          }}
+        />
       </DialogContent>
     </Dialog>
   )
