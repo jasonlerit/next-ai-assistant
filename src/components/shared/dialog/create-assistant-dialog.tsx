@@ -1,3 +1,4 @@
+import { AI_MODELS } from "@/common/constants/ai-models"
 import { PaginatedResponse } from "@/common/types/pagination.type"
 import { QueryKey } from "@/common/types/query-key.type"
 import { InputError } from "@/components/shared/input/input-error"
@@ -12,6 +13,13 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { Textarea } from "@/components/ui/textarea"
 import { Assistant, insertAssistantsSchema } from "@/db/schemas/assistants.schema"
@@ -107,7 +115,7 @@ export function CreateAssistantDialog() {
 
   return (
     <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild onClick={() => form.reset()}>
         <SidebarMenuButton className='cursor-pointer'>
           <Plus />
           <span>Add New Assistant</span>
@@ -163,16 +171,19 @@ export function CreateAssistantDialog() {
           <form.Field name='model'>
             {(field) => (
               <div className='grid gap-2'>
-                <Label htmlFor={field.name}>Model</Label>
-                <Input
-                  id={field.name}
-                  name={field.name}
-                  value={field.state.value}
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  type='text'
-                  placeholder='Model'
-                />
+                <Label>Model</Label>
+                <Select onValueChange={(value) => field.handleChange(value)}>
+                  <SelectTrigger className='w-full'>
+                    <SelectValue placeholder='Select a model' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {AI_MODELS.map((model, index) => (
+                      <SelectItem key={index} value={model.value}>
+                        {model.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <InputError field={field} />
               </div>
             )}

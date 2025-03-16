@@ -1,7 +1,9 @@
+import { AI_MODELS } from "@/common/constants/ai-models"
 import { users } from "@/db/schemas/users.schema"
 import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm"
 import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
 import { createInsertSchema, createSelectSchema } from "drizzle-zod"
+import { z } from "zod"
 
 export const assistants = pgTable("assistants", {
   id: uuid().primaryKey().defaultRandom(),
@@ -30,7 +32,10 @@ export const selectAssistantsSchema = createSelectSchema(assistants)
 export const insertAssistantsSchema = createInsertSchema(assistants, {
   name: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
   role: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
-  model: (s) => s.min(1, "Minimum of 1 character").max(255, "Maximum of 255 characters"),
+  model: () =>
+    z.enum(AI_MODELS.map((model) => model.value) as [string, ...string[]], {
+      errorMap: () => ({ message: "Please select a model" }),
+    }),
   systemInstruction: (s) => s.min(1, "Minimum of 1 character"),
 }).omit({
   id: true,
