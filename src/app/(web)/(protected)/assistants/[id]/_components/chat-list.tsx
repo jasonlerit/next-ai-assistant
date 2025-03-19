@@ -11,7 +11,7 @@ export function ChatList() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const messageRef = useRef<HTMLDivElement | null>(null)
 
-  const [extraPadding, setExtraPadding] = useState(620)
+  const [extraPadding, setExtraPadding] = useState(0)
 
   const { data } = useQuery({
     queryKey: [QueryKey.MESSAGES, id],
