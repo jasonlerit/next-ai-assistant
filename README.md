@@ -51,7 +51,7 @@ REDIS_TTL=300
 ## ⚙️ Running the App Locally
 ### 1. Clone the repository:
 ```
-git clone git@github.com:jasonlerit/next-ai-assistant.git
+git clone https://github.com/jasonlerit/next-ai-assistant.git
 cd next-ai-assistant
 ```
 ### 2. Install dependencies:
