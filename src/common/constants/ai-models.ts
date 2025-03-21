@@ -1,4 +1,4 @@
-import { Option } from "@/common/types/option"
+import { Option } from "@/common/types/option.type"
 
 export const AI_MODELS: Option[] = [
   {
